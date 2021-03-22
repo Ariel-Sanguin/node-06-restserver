@@ -27,6 +27,21 @@ class ExpressServer {
         this.app.use(this.basePathUser, require('../../routes/users'));
     }
 
+    _notFound(){
+        this.app.use((req, res, next)=>{
+            const err = new Error("Not Found");
+            err.code = 404;
+            next(err);
+        });
+    }
+
+    _errorHandler(){
+        this.app.use((err, req, res, next)=>{
+            const code= err.code || 500;
+            res.status(code);
+        });
+    }
+
     async start() {
         this.app.listen(this.port, (error)=>{
             if(error){
