@@ -13,7 +13,7 @@ class ExpressServer {
         
         this._middlewares();
         this._swaggerConfig();
-        
+
         this._routes();
 
         this._notFound();
@@ -60,7 +60,10 @@ class ExpressServer {
     }
 
     _swaggerConfig(){
-        this.app.use(config.swagger.path, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+        this.app.use(
+            config.swagger.path,
+            swaggerUi.serve,
+            swaggerUi.setup(require('../swagger/swagger.json')));
     }    
 
     async start() {
